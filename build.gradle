@@ -1,0 +1,48 @@
+group 'com.fef'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.1.4'
+    ext.spanner_version = '0.20.1-beta'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+
+plugins {
+  id "io.spring.dependency-management" version "1.0.3.RELEASE"
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "com.google.cloud:google-cloud-spanner:$spanner_version"
+    compile "com.google.cloud:google-cloud:0.21.1-alpha"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+dependencyManagement {
+  imports {
+    mavenBom 'com.google.cloud:google-cloud-pom:0.21.1-alpha'
+  }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
